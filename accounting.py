@@ -41,20 +41,46 @@ def get_revenue(counts):
         total_revenue =+ revenue
         print(f"We sold {counts[melon_type]} {melon_type} melons at ${price:.2f} each for a total of ${revenue:.2f}")
 
+def get_sales_by_type(filename):
+    """compares the sales revenue of online orders and orders from salespeople"""
+
+    with open(filename, 'r') as sales_data:
+        online_revenue = 0
+        salesperson_revenue = 0
+
+        for line in sales_data:
+            _, sales_type, _, amt = line.rstrip().split('|')
+
+            if sales_type == "0":
+                online_revenue += float(amt)
+            else:
+                salesperson_revenue += float(amt)
+            print(f"Salespeople generated ${salesperson_revenue:.2f} in revenue.")
+            print(f"Internet sales generated ${online_revenue:.2f} in revenue.")
+
+            if sales[1] > sales[0]:
+                print("Guess there's some value to those salespeople after all.")
+            else:
+                print("Time to fire the sales team! Online sales rule all!")
 
 
-f = open("orders-with-sales.txt")
-sales = [0, 0]
-for line in f:
-    d = line.split("|")
-    if d[1] == "0":
-        sales[0] += float(d[3])
-    else:
-        sales[1] += float(d[3])
-print(f"Salespeople generated ${sales[1]:.2f} in revenue.")
-print(f"Internet sales generated ${sales[0]:.2f} in revenue.")
-if sales[1] > sales[0]:
-    print("Guess there's some value to those salespeople after all.")
-else:
-    print("Time to fire the sales team! Online sales rule all!")
-print("******************************************")
+def main():
+    """run the melon count, gets the total revenue and shows revenue by type of sale"""
+
+    #gets the order counts
+    counts = get_melon_count('orders-by-type.txt')
+
+    #gets total revenue
+    dorky_line()
+    get_revenue(counts)
+
+    #gets the revenue by sales type
+    dorky_line()
+    get_sales_by_type('orders-with-sales.txt')
+
+#call main function
+main()
+
+
+
+
