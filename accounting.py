@@ -2,30 +2,29 @@
 # INTERNET_INDEX = 1
 # DORKY_LINE_LENGTH = 80
 
-def dorky_line(): # declares the fuctions
+def dorky_line(): # declares the function dorky line
     print("*" * 80) #prints a line of 80 asterisks
 
 dorky_line()#calls the dorky_line function
 
-orders = open("orders-by-type.txt") #opens the file specified
-melon_tally = {"Musk": 0, "Hybrid": 0, "Watermelon": 0, "Winter": 0} #creates a dictionary of melon keys with initial values set to 0
+def get_melon_count(filename): #declares the function to get the melon count
+    """Tallies of melons by type"""
 
-for line in orders: #iterates through each line in an open file
-    data = line.split("|")
-    melon_type = data[1]
-    melon_count = int(data[2])
-    melon_tally[melon_type] += melon_count
+    with open(filename) as order_data: #opens the file as the variable order_data
+        melon_counts ={ #sets the initial value of each type of melon as zero
+            'musk': 0,
+            'hybrid': 0,
+            'watermelon': 0,
+            'winter': 0
+        }
+        for line in order_data: #iterates through order data
+            _, melon_type, melon_counts = line.rstrip().split('|') #splits the information between bars
+            melon_counts[melon_type.lower()] += int(melon_counts) #taking the string of melon types into lowercase and adding the numbers of the types of melons
 
-f.close()
-melon_prices = { "Musk": 1.15, "Hybrid": 1.30, "Watermelon": 1.75, "Winter": 4.00 }
-total_revenue = 0
-for melon_type in melon_tally:
-    price = melon_prices[melon_type]
-    revenue = price * melon_tally[melon_type]
-    total_revenue += revenue
-    # print("We sold %d %s melons at %0.2f each for a total of %0.2f" % (melon_tallies[melon_type], melon_type, price, revenue))
-    print(f"We sold {melon_tally[melon_type]} {melon_type} melons at {price:.2f} each for a total of {revenue:.2f}")
-print("******************************************")
+        return melon_counts
+
+
+
 f = open("orders-with-sales.txt")
 sales = [0, 0]
 for line in f:
