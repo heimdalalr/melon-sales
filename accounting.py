@@ -23,6 +23,24 @@ def get_melon_count(filename): #declares the function to get the melon count
 
         return melon_counts
 
+def get_revenue(counts):
+    """Prints out the revenue for each melon type"""
+
+    total_revenue = 0
+
+    melon_prices = {
+        'musk': 1.15,
+        'hybrid': 1.30,
+        'watermelon': 1.75,
+        'winter': 4.00
+    }
+
+    for melon_type in counts:
+        price = melon_prices[melon_type]
+        revenue = counts[melon_type] * melon_prices[melon_type]
+        total_revenue =+ revenue
+        print(f"We sold {counts[melon_type]} {melon_type} melons at ${price:.2f} each for a total of ${revenue:.2f}")
+
 
 
 f = open("orders-with-sales.txt")
